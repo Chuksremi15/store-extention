@@ -132,11 +132,11 @@ const Page: NextPage = () => {
     <div className="container mx-auto max-w-6xl py-8 px-8 flex flex-col gap-y-10">
       {" "}
       <h4 className="font-heading text-xl lg:text-3xl">Admin Dashboard</h4>
-      <div className="grid grid-cols-3 gap-x-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-4">
         <div className="max-w-sm border p-4 flex flex-col gap-y-4 bg-base-100">
           <h5 className="font-heading text-xl ">Contract Balance</h5>
           <div className="flex flex-col">
-            <h5 className="font-heading text-base ">
+            <h5 className="font-heading text-base">
               <Balance address={popUpStore?.address} />
             </h5>
             {tokens ? (

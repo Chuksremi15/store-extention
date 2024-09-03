@@ -50,18 +50,11 @@ const Page: NextPage = () => {
   };
 
   const handlePayment = async () => {
-    setPaymentLoading(true);
-
     try {
-      console.log("form values: ", paymentForm);
-
       if (tokens && Number(paymentForm.tokenIndex) === tokens?.length) {
-        console.log("paying with eth");
+        setPaymentLoading(true);
 
         const priceInEth = Number(formatEther(productPrice!)) / nativeCurrencyPrice;
-
-        console.log("Price in Eth: ", priceInEth * (101 / 100));
-        console.log(" scaled Eth price: ", priceInEth * 1e18);
 
         await writeYourContractAsyncStore({
           functionName: "payWithEth",
@@ -71,20 +64,24 @@ const Page: NextPage = () => {
 
         setPaymentLoading(false);
       } else {
-        if (paymentForm.tokenIndex) {
+        if (paymentForm.tokenIndex !== "") {
+          setPaymentLoading(true);
+
           await writeYourContractAsyncToken({
             functionName: "approve",
             args: [popUpStoreData?.address, productPrice],
           });
 
-          await writeYourContractAsyncStore({
+          let trxRef = await writeYourContractAsyncStore({
             functionName: "payWithToken",
             args: [productPrice, BigInt(paymentForm.tokenIndex), params.itemId],
           });
 
-          notification.success(<div className="text-xl font-body">Payment successful</div>, {
-            icon: "🎉",
-          });
+          if (trxRef) {
+            notification.success(<div className="font-body text-base">Payment successful</div>, {
+              icon: "🎉",
+            });
+          }
 
           setPaymentLoading(false);
         }

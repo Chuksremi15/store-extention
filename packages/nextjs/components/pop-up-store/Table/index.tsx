@@ -11,18 +11,20 @@ export const PaymentEventTable = ({
   children: Iterable<ReactNode>;
 }) => {
   return (
-    <table>
-      <thead>
-        <tr className="bg-base-300 border-b">
-          {headerContent.map((title, index) => (
-            <th scope="col" key={index} className="text-start p-4 text-base font-body whitespace-nowrap">
-              {title}
-            </th>
-          ))}
-        </tr>
-      </thead>
-      <tbody>{children}</tbody>
-    </table>
+    <div className="w-full overflow-scroll">
+      <table>
+        <thead>
+          <tr className="bg-base-300 border-b">
+            {headerContent.map((title, index) => (
+              <th scope="col" key={index} className="text-start p-4 text-base font-body whitespace-nowrap">
+                {title}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>{children}</tbody>
+      </table>
+    </div>
   );
 };
 
